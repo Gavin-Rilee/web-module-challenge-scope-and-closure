@@ -62,11 +62,11 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+  return Math.floor(Math.random() * 3);
 }
 
-
+console.log(inning());
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
   1. Receive the callback function `inning` that was created in Task 2 
@@ -81,8 +81,22 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(inningCB,numOfInnings){
+ let homeScore = 0;
+ let awayScore = 0;
+ // Initializing my variables to be used later on in the function 
+
+  for(let i = 1; i <= numOfInnings; i++){
+    homeScore = inningCB() + homeScore;// even though it is the same variable they are 2 different nunmbers 
+    awayScore = inningCB() + awayScore;// invoke your function to callback
+  }
+
+ const scoreObj = {
+   Home: homeScore,
+   Away: awayScore,
+ }
+ console.log(scoreObj);
+return scoreObj;
 }
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -90,8 +104,11 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inningCB) {
+return {
+  Home: inningCB(),
+  Away:inningCB()
+}
 }
 
 
@@ -136,10 +153,25 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
-}
+ function scoreboard(CB, CB2, playInn ) {
+  let newArr = [];
+  let homeScore = 0;
+  let awayScore = 0;
+  for( let i = 0; i < playInn; i++){
 
+    const inning = CB(CB2);
+    homeScore += inning.Home;
+    awayScore += inning.Away;
+    newArr.push( `Inning ${i + 1}: Away ${inning.Away} - Home ${inning.Home}` );
+  }
+    if(inning.Away === inning.Home) {
+      newArr.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`);
+    } else {
+      newArr.push(`Final Score: Away ${awayScore} - Home ${homeScore}`);
+    }
+  
+  return newArr
+}
 
 
 
